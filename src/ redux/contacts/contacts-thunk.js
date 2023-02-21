@@ -31,9 +31,9 @@ export const deleteContactThunk = createAsyncThunk(
 
 export const postContactThunk = createAsyncThunk(
   'users/postUser',
-  async (_, { rejectWithValue }) => {
+  async (newContact, { rejectWithValue }) => {
     try {
-      const data = await postContact();
+      const data = await postContact(newContact);
       return data;
     } catch {
       return rejectWithValue();

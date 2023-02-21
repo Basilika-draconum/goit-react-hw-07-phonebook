@@ -14,7 +14,7 @@ export const deleteContact = async id => {
   return data;
 };
 
-export const postContact = async () => {
-  const { data } = await contactService.post('');
+export const postContact = async newContact => {
+  const { data } = await contactService.post('', newContact);
   return data;
 };

@@ -1,5 +1,8 @@
-import { addContactAction } from ' redux/contacts/contact-slice';
-import { getContactsThunk } from ' redux/contacts/contacts-thunk';
+// import { addContactAction } from ' redux/contacts/contact-slice';
+import {
+  getContactsThunk,
+  postContactThunk,
+} from ' redux/contacts/contacts-thunk';
 import {
   selectContacts,
   // selectError,
@@ -13,8 +16,8 @@ import css from './formPhonebook.module.scss';
 
 const FormPhonebook = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-  const actions = { name: setName, number: setNumber };
+  const [phone, setPhone] = useState('');
+  const actions = { name: setName, phone: setPhone };
   const dispatch = useDispatch();
   const handleChange = e => {
     const { name, value } = e.target;
@@ -31,7 +34,7 @@ const FormPhonebook = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const newContact = { name, number, id: nanoid() };
+    const newContact = { name, phone, id: nanoid() };
     if (
       contacts.some(
         item => item.name.toLowerCase().trim() === name.toLowerCase().trim()
@@ -40,10 +43,10 @@ const FormPhonebook = () => {
       alert(`${name} is already in contacts`);
       return;
     }
-    dispatch(addContactAction(newContact));
+    dispatch(postContactThunk(newContact));
 
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   return (
@@ -63,15 +66,15 @@ const FormPhonebook = () => {
           required
         />
 
-        <label className={css.formLabel} htmlFor="number">
-          Number
+        <label className={css.formLabel} htmlFor="phone">
+          Phone
         </label>
         <input
           className={css.formInput}
           onChange={handleChange}
           type="tel"
-          name="number"
-          value={number}
+          name="phone"
+          value={phone}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
